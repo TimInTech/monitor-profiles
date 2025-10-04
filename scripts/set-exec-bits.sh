@@ -41,7 +41,7 @@ if [[ "$ans" =~ ^[Yy]$ ]]; then
   git commit -m "Set executable bits for monitor scripts"
   echo "Committed."
 else
-  echo "Changes staged in index only. Run 'git add -A && git commit -m "...' to commit if desired." 
+   echo "Changes staged in index only. Run 'git add -A && git commit -m \"...\"' to commit if desired." 
 fi
 
 echo "Fertig."

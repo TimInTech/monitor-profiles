@@ -90,3 +90,6 @@ Uses `kdialog --passivepopup` for user feedback with graceful fallback if not av
 - Scripts only modify position/mode, not rotation settings
 - systemd --user services require proper user session for D-Bus access
 - Timer services must be explicitly stopped before starting conflicting profiles
+
+Repo: KDE/Wayland monitor-profiles (kscreen-doctor, systemd --user).
+Erstelle PR branch `copilot/bootstrap`: add root README, smoke-test (dry-run), .github workflow (bash -n), set exec bits for bin/*.sh in git, ensure desktop Exec -> bin/monitors_menu_launcher.sh, make notify_ non-blocking. Keine hardware-spezifischen Geometry-Änderungen. Draft PR.

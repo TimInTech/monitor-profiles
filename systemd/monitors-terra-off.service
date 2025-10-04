@@ -1,0 +1,6 @@
+[Unit]
+Description=Monitore ausschalten (ohne Lock) unter Plasma/KWin
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/qdbus org.kde.KWin /org/kde/KWin powerOffMonitors

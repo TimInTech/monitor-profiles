@@ -1,0 +1,6 @@
+[Unit]
+Description=Revert auf Dreier-Monitorlayout
+
+[Service]
+Type=oneshot
+ExecStart=%h/apps/monitor-profiles/bin/monitors_triple.sh

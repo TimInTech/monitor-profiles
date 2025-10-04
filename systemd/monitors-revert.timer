@@ -1,0 +1,10 @@
+[Unit]
+Description=Revert-Timer (2 Minuten)
+
+[Timer]
+OnActiveSec=2min
+AccuracySec=10s
+Unit=monitors-revert.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Monitor Profiles
+Comment=KDE/KScreen monitor configuration management
+Icon=preferences-desktop-display
+Exec=bin/monitors_menu_launcher.sh
+Terminal=false
+Categories=System;Settings;
+Keywords=monitor;display;screen;kscreen;configuration;

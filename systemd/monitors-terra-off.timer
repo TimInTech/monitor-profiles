@@ -1,0 +1,10 @@
+[Unit]
+Description=Schalte Monitore nach 90 Minuten aus (Terra-only)
+
+[Timer]
+OnActiveSec=90min
+AccuracySec=1min
+Unit=monitors-terra-off.service
+
+[Install]
+WantedBy=timers.target

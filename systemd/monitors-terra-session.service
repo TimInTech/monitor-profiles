@@ -1,0 +1,8 @@
+[Unit]
+Description=Terra-Only Sitzungsblocker (kein Idle/Sleep/Lock)
+
+[Service]
+Type=simple
+# blockiert Idle/Sleep, läuft im Hintergrund bis Stopp
+ExecStart=/usr/bin/systemd-inhibit --what=idle:sleep --mode=block --why="Terra-only mode" sleep infinity
+Restart=on-failure

@@ -1,21 +1,31 @@
 #!/usr/bin/env bash
+set -euo pipefail
 # Common functions for monitor profile management
 # Generic helpers for KDE/KScreen configuration
 
 # Non-blocking notification functions
 notify_info() {
     local message="$1"
-    notify-send "Monitor Profiles" "${message}" &
+    # Check if we have a display to send to
+    if [[ -n "${DISPLAY:-}" ]] || [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+        nohup notify-send "Monitor Profiles" "${message}" >/dev/null 2>&1 &
+    fi
 }
 
 notify_error() {
     local message="$1"
-    notify-send -u critical "Monitor Profiles Error" "${message}" &
+    # Check if we have a display to send to
+    if [[ -n "${DISPLAY:-}" ]] || [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+        nohup notify-send -u critical "Monitor Profiles Error" "${message}" >/dev/null 2>&1 &
+    fi
 }
 
 notify_success() {
     local message="$1"
-    notify-send "Monitor Profiles" "${message}" &
+    # Check if we have a display to send to
+    if [[ -n "${DISPLAY:-}" ]] || [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+        nohup notify-send "Monitor Profiles" "${message}" >/dev/null 2>&1 &
+    fi
 }
 
 # Dry-run mode check

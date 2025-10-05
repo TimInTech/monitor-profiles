@@ -74,8 +74,6 @@ kscreen-doctor output.DP-4.enable output.DP-4.mode.1920x1080@60 output.DP-4.rota
 │   └── monitors-revert.service   # Manual revert to triple
 ├── install.sh                   # Idempotent installer
 ├── uninstall.sh                 # Cleanup script
-└── ~/.local/bin/monitors-mode.sh # Main controller
-```
 
 ## Desktop File Format
 

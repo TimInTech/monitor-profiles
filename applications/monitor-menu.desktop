@@ -1,7 +1,8 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
 Name=Monitor-Umschalter
-Exec=/home/gummi/apps/monitor-profiles/bin/monitors_menu_launcher.sh
+Exec=/bin/bash -lc '~/github_repos/monitor-profiles/bin/monitors_menu_launcher.sh'
 Icon=video-display
 Categories=Settings;X-KDE-settings-hardware;
 Terminal=false

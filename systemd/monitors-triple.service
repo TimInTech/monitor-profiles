@@ -2,10 +2,8 @@
 Description=Setze Dreier-Monitorlayout
 After=plasma-plasmashell.service graphical-session.target
 Wants=graphical-session.target
-
 [Service]
 Type=oneshot
-ExecStart=%h/apps/monitor-profiles/bin/monitors_triple.sh
-
+ExecStart=%h/.local/bin/monitors-mode.sh triple --primary DP-3
 [Install]
 WantedBy=default.target

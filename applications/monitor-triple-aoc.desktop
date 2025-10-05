@@ -1,7 +1,8 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
 Name=Monitor: AOC Triple
-Exec=/bin/bash -lc '~/.local/bin/monitors-mode.sh triple'
+Exec=/bin/bash -lc '~/.local/bin/monitors-mode.sh triple --primary DP-3'
 Icon=video-display
 Categories=Settings;Utility;
 Terminal=false

@@ -41,3 +41,16 @@
 - 2025-10-04: `monitors_triple.sh` an reale Geometrie angepasst (DP-4: 0,260; DP-3: 1920,260; DP-2: 3840,0).
 
 - 2025-10-04: `notify_()` in `bin/monitors_lib.sh` läuft nun nicht-blockierend (nohup &) um systemd-Hänger zu vermeiden.
+
+[Unit]
+Description=Apply selected monitor mode
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/monitors-mode.sh triple
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

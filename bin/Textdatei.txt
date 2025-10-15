@@ -1,0 +1,45 @@
+Monitor 1/3
+
+output.DP-4.enable output.DP-4.mode.1920x1080@60 output.DP-4.rotation.normal output.DP-4.scale.1 output.DP-4.position.1920,260 output.DP-1.disable output.DP-3.disable output.DP-2.disable
+Enabling output 4
+kscreen.doctor: Taddaaa! Found mode "137" "1920x1080@60"
+kscreen.doctor: Output 4 set mode "1920x1080@60"
+kscreen.doctor: Set output position QPoint(1920,260)
+Disabling output 1
+Disabling output 2
+Disabling output 3
+
+---
+Monitor 2/3
+
+output.DP-3.enable output.DP-3.mode.1920x1080@75 output.DP-3.rotation.normal output.DP-3.scale.1 output.DP-3.position.3840,260 output.DP-1.disable output.DP-4.disable output.DP-2.disable
+Enabling output 3
+kscreen.doctor: Taddaaa! Found mode "92" "1920x1080@75"
+kscreen.doctor: Output 3 set mode "1920x1080@75"
+kscreen.doctor: Set output position QPoint(3840,260)
+Disabling output 1
+Disabling output 2
+Disabling output 4
+qt.qpa.wayland: There are no outputs - creating placeholder screen
+
+---
+
+Monitor 3/3 ( Hochkant)
+
+output.DP-2.enable output.DP-2.mode.1920x1080@75 output.DP-2.rotation.right output.DP-2.scale.1 output.DP-2.position.5760,0 output.DP-1.disable output.DP-4.disable output.DP-3.disable
+Enabling output 3
+kscreen.doctor: Taddaaa! Found mode "93" "1920x1080@75"
+kscreen.doctor: Output 3 set mode "1920x1080@75"
+kscreen.doctor: Set output position QPoint(5760,0)
+Disabling output 1
+Disabling output 4
+Disabling output 2
+qt.qpa.wayland: There are no outputs - creating placeholder screen
+
+
+
+
+
+
+
+

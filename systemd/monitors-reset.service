@@ -1,0 +1,11 @@
+[Unit]
+Description=Reset Monitors to Default Configuration
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/reset-monitors.sh
+
+[Install]
+WantedBy=default.target

@@ -4,59 +4,80 @@
 
 ### Physical Setup
 
-- **AOC Left (DP-4)**: 1920x1080@60Hz, landscape
-- **AOC Mid (DP-3)**: 1920x1080@75Hz, landscape
-- **AOC Right (DP-2)**: 1080x1920@75Hz, portrait (rotated right)
+- **DP-1 (AOC 27G15N)**: 1920x1080@60Hz (bis 180Hz möglich), landscape
+- **DP-4 (AOC 27B2G5)**: 1920x1080@60Hz, landscape
+- **DP-3 (AOC 27B2G5)**: 1920x1080@75Hz, landscape
+- **DP-2 (AOC 27B2G5)**: 1080x1920@75Hz, portrait (rotated right)
 
 ### Layout Coordinates
 
+**Quad Mode (all 4 monitors):**
+
+```text
+[0,260] DP-1    [1920,260] DP-4    [3840,260] DP-3    [5760,0] DP-2
+(1920x1080)     (1920x1080)         (1920x1080)        (1080x1920)
+27G15N          27B2G5 Left         27B2G5 Mid         27B2G5 Right
+Landscape       Landscape           Landscape          Portrait
 ```
-AOC Triple:     [0,260] DP-4    [1920,260] DP-3    [3840,0] DP-2
-                (1920x1080)     (1920x1080)        (1080x1920)
-                Landscape       Landscape          Portrait
+
+**Triple Mode (3 AOC 27B2G5 monitors):**
+
+```text
+[0,260] DP-4    [1920,260] DP-3    [3840,0] DP-2
+(1920x1080)     (1920x1080)        (1080x1920)
+Left            Middle             Right
+Landscape       Landscape          Portrait
 ```
 
 Position calculations:
 
-- DP-4 starts at x=0
-- DP-3 starts at x=1920
-- DP-2 starts at x=3840
+- Quad: DP-1 @ x=0, DP-4 @ x=1920, DP-3 @ x=3840, DP-2 @ x=5760
+- Triple: DP-4 @ x=0, DP-3 @ x=1920, DP-2 @ x=3840
 - Landscape monitors offset by y=260 to align with portrait monitor's center
 
-## Command Sequences
+## Controller Script Usage
 
-Each monitor configuration executes exactly ONE `kscreen-doctor` call with all parameters:
+Use the central controller `~/.local/bin/monitors-mode.sh` to switch layouts reliably. It wraps `kscreen-doctor` and adds safety checks and fallbacks.
 
-### Single AOC Left (DP-4)
+Examples:
 
-```bash
-kscreen-doctor output.DP-4.enable output.DP-4.mode.1920x1080@60 output.DP-4.rotation.normal output.DP-4.scale.1 output.DP-4.position.1920,260 output.DP-1.disable output.DP-3.disable output.DP-2.disable
+```text
+# Triple mode (DP-4 + DP-3 + DP-2), DP-3 primary
+~/.local/bin/monitors-mode.sh triple --primary DP-3
+~/.local/bin/monitors-mode.sh quad --primary DP-3
+
+# Single modes
+~/.local/bin/monitors-mode.sh single dp1   # Only DP-1
+~/.local/bin/monitors-mode.sh single dp2   # Only DP-2 (portrait)
+~/.local/bin/monitors-mode.sh single dp3   # Only DP-3
+~/.local/bin/monitors-mode.sh single dp4   # Only DP-4
+
+# Reset (hard disable all, then apply layout)
+~/.local/bin/monitors-mode.sh reset triple
+~/.local/bin/monitors-mode.sh reset quad
+
+# Status (raw kscreen-doctor output)
+~/.local/bin/monitors-mode.sh status
+
+# Dry run (no changes, just print commands)
+KS_BIN=echo ~/.local/bin/monitors-mode.sh quad --primary DP-3
 ```
 
-### Single AOC Mid (DP-3)
+### Exclusive mode and two-phase sequencing
 
-```bash
-kscreen-doctor output.DP-3.enable output.DP-3.mode.1920x1080@75 output.DP-3.rotation.normal output.DP-3.scale.1 output.DP-3.position.3840,260 output.DP-1.disable output.DP-4.disable output.DP-2.disable
-```
-
-### Single AOC Right (DP-2)
-
-```bash
-kscreen-doctor output.DP-2.enable output.DP-2.mode.1920x1080@75 output.DP-2.rotation.right output.DP-2.scale.1 output.DP-2.position.5760,0 output.DP-1.disable output.DP-4.disable output.DP-3.disable
-```
-
-### Triple AOC
-
-```bash
-kscreen-doctor output.DP-4.enable output.DP-4.mode.1920x1080@60 output.DP-4.rotation.normal output.DP-4.scale.1 output.DP-4.position.0,260 output.DP-3.enable output.DP-3.mode.1920x1080@75 output.DP-3.rotation.normal output.DP-3.scale.1 output.DP-3.position.1920,260 output.DP-2.enable output.DP-2.mode.1920x1080@75 output.DP-2.rotation.right output.DP-2.scale.1 output.DP-2.position.3840,0 output.${primary}.primary
-```
+- Single modes are exclusive: the script disables all outputs first and then enables exactly one.
+- Triple/Quad follow the same two-phase pattern: first disable all, short pause, then enable the desired outputs and apply mode/rotation/position and primary.
+- Ordering and geometry (left → right): DP-1, DP-4, DP-3 (primary), DP-2 (portrait). Positions: DP-1 `0,260`, DP-4 `1920,260`, DP-3 `3840,260`, DP-2 `5760,0`. Rates: DP-1/DP-4 `60Hz`, DP-3/DP-2 `75Hz`.
+- Only `kscreen-doctor` is used (Wayland). For dry-run use `KS_BIN=echo`.
 
 ## File Structure
 
-```
+```text
 ~/github_repos/monitor-profiles/
 ├── bin/
-│   ├── triple-aoc.sh             # Wrapper for triple mode
+│   ├── monitors-mode.sh          # Central robust controller (installed to ~/.local/bin)
+│   ├── reset-monitors.sh         # Reset wrapper (installed to ~/.local/bin)
+│   ├── triple-aoc.sh             # Back-compat wrapper for triple mode
 │   └── monitors_menu_launcher.sh # Interactive menu
 ├── applications/
 │   ├── monitor-menu.desktop      # Menu launcher
@@ -82,11 +103,31 @@ Systemd units can use `%h` for home directory:
 ExecStart=%h/.local/bin/monitors-mode.sh triple --primary DP-3
 ```
 
+Reset launcher and manual reset service examples:
+
+```ini
+# Desktop reset launcher
+Exec=/bin/bash -lc '~/.local/bin/reset-monitors.sh'
+
+# systemd --user unit
+[Unit]
+Description=Reset Monitors to Default Configuration
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/reset-monitors.sh
+
+[Install]
+WantedBy=default.target
+```
+
 ## Troubleshooting
 
 ### Wayland vs X11
 
-This controller is designed for **Wayland only**. On X11, use `xrandr` instead of `kscreen-doctor`.
+This controller is designed for **Wayland only**. On X11, use `xrandr` instead of `kscreen-doctor` (manual commands are encapsulated by `monitors-mode.sh`).
 
 ### Port Name Changes
 
@@ -121,4 +162,5 @@ Use `KS_BIN=echo` environment variable to see commands without execution:
 
 ```bash
 KS_BIN=echo ~/.local/bin/monitors-mode.sh triple --primary DP-4
+KS_BIN=echo ~/.local/bin/monitors-mode.sh quad --primary DP-3
 ```

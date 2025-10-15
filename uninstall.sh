@@ -10,7 +10,6 @@ echo "Uninstalling monitor profiles controller..."
 # Remove desktop files
 echo "Removing desktop files from $APPS_DIR..."
 rm -f "$APPS_DIR/monitor-menu.desktop"
-rm -f "$APPS_DIR/monitor-single-terra.desktop"
 rm -f "$APPS_DIR/monitor-triple-aoc.desktop"
 
 # Refresh application menu
@@ -27,7 +26,6 @@ echo ""
 echo "Manual cleanup (if desired):"
 echo "  # Remove controller and wrappers"
 echo "  rm -f ~/.local/bin/monitors-mode.sh"
-echo "  rm -f ~/.local/bin/one-terra.sh"
 echo "  rm -f ~/.local/bin/triple-aoc.sh"
 echo ""
 echo "  # Disable and remove systemd services"

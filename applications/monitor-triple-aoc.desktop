@@ -6,4 +6,4 @@ Exec=/bin/bash -lc '~/.local/bin/monitors-mode.sh triple --primary DP-3'
 Icon=video-display
 Categories=Settings;Utility;
 Terminal=false
-Comment=Enables DP-4/DP-3/DP-2, disables Terra (DP-1).
+Comment=Enables DP-4/DP-3/DP-2 triple layout.

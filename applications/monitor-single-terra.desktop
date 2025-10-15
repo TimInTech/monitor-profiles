@@ -1,9 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Name=Monitor: Nur Terra (DP-1)
-Exec=/bin/bash -lc '~/.local/bin/monitors-mode.sh single terra'
-Icon=video-display
-Categories=Settings;Utility;
-Terminal=false
-Comment=Enables Terra (DP-1) only. Disables DP-2/3/4.

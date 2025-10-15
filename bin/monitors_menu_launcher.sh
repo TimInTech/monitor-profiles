@@ -9,8 +9,8 @@ choice=$(kdialog --menu "Monitor-Layout wählen:" \
   "aoc-mid" "Nur DP-3 (Mitte)" \
   "aoc-right" "Nur DP-2 (Rechts)" 2>/dev/null || exit 0)
 case "$choice" in
-  triple) notify "Aktiviere Triple…"; exec "$CTL" triple --primary DP-3 ;;
-  aoc-left)  notify "Aktiviere DP-4…"; exec "$CTL" single aoc-left ;;
-  aoc-mid)   notify "Aktiviere DP-3…"; exec "$CTL" single aoc-mid ;;
-  aoc-right) notify "Aktiviere DP-2…"; exec "$CTL" single aoc-right ;;
+  triple)    notify "Aktiviere Triple…";   exec "$CTL" triple --primary DP-3 ;;
+  aoc-left)  notify "Aktiviere DP-4…";     exec "$CTL" single aoc-left ;;
+  aoc-mid)   notify "Aktiviere DP-3…";     exec "$CTL" single aoc-mid ;;
+  aoc-right) notify "Aktiviere DP-2…";     exec "$CTL" single aoc-right ;;
 esac

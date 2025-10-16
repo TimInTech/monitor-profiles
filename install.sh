@@ -33,6 +33,11 @@ cp "$REPO_DIR/applications/monitor-reset.desktop" "$APPS_DIR/"
 chmod +x "$HOME/.local/bin/monitors-mode.sh" "$HOME/.local/bin/reset-monitors.sh" "$HOME/.local/bin/triple-aoc.sh"
 chmod +x "$REPO_DIR/bin/monitors_menu_launcher.sh"
 
+# Mark desktop files as executable (trusted)
+chmod +x "$APPS_DIR/monitor-menu.desktop" || true
+chmod +x "$APPS_DIR/monitor-triple-aoc.desktop" || true
+chmod +x "$APPS_DIR/monitor-reset.desktop" || true
+
 # Refresh application menu
 echo "Refreshing application menu..."
 if command -v kbuildsycoca6 >/dev/null; then

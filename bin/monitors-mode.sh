@@ -2,7 +2,23 @@
 set -euo pipefail
 
 KS_BIN="${KS_BIN:-kscreen-doctor}"
-ks(){ echo "$*"; "$KS_BIN" "$@"; }
+
+# Logging & Notify
+LOG_FILE="${LOG_FILE:-$HOME/.cache/monitors-mode.log}"
+mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null || true
+log(){ printf '[%s] %s\n' "$(date +'%F %T')" "$*" >>"$LOG_FILE" 2>/dev/null || true; }
+notify(){
+  local msg="$*"
+  if command -v kdialog >/dev/null 2>&1; then
+    nohup kdialog --passivepopup "$msg" 3 >/dev/null 2>&1 &
+  elif command -v notify-send >/dev/null 2>&1; then
+    notify-send "Monitors" "$msg" || true
+  else
+    echo "$msg"
+  fi
+}
+ks(){ echo "$*"; log "KS: $*"; "$KS_BIN" "$@"; }
+done_msg(){ local m="$*"; log "DONE: $m"; notify "$m"; }
 
 # ---- feste Layout-Parameter ----
 P_DP1_POS="0,260";    P_DP1_MODE="1920x1080@60"
@@ -28,6 +44,7 @@ only(){
   esac
   # Sicherheitsnetz: alles außer Ziel erneut deaktivieren
   for o in DP-1 DP-4 DP-3 DP-2; do [[ "$o" == "$target" ]] || ks output.$o.disable || true; done
+  done_msg "Single aktiv: $target"
 }
 
 layout_triple(){
@@ -40,6 +57,7 @@ layout_triple(){
     output.DP-3.mode.${P_DP3_MODE} output.DP-3.rotation.normal output.DP-3.scale.1 output.DP-3.position.${P_DP3_POS} \
     output.DP-2.mode.${P_DP2_MODE} output.DP-2.rotation.right  output.DP-2.scale.1 output.DP-2.position.${P_DP2_POS} \
     output.${primary}.primary
+  done_msg "Triple aktiv (Primary: ${primary})"
 }
 
 layout_quad(){
@@ -53,6 +71,7 @@ layout_quad(){
     output.DP-3.mode.${P_DP3_MODE} output.DP-3.rotation.normal output.DP-3.scale.1 output.DP-3.position.${P_DP3_POS} \
     output.DP-2.mode.${P_DP2_MODE} output.DP-2.rotation.right  output.DP-2.scale.1 output.DP-2.position.${P_DP2_POS} \
     output.${primary}.primary
+  done_msg "Quad aktiv (Primary: ${primary})"
 }
 
 status(){ "$KS_BIN" -o; }

@@ -2,7 +2,7 @@
 [Desktop Entry]
 Name=Monitor Reset
 Comment=Setzt alle Monitore auf Standardwerte zurück
-Exec=/bin/bash -lc '~/.local/bin/reset-monitors.sh'
+Exec=/bin/bash -lc "$HOME/.local/bin/reset-monitors.sh"
 Icon=video-display
 Terminal=false
 Type=Application
